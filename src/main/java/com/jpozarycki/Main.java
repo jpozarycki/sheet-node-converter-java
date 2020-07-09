@@ -1,5 +1,8 @@
 package com.jpozarycki;
 
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.jpozarycki.model.Node;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -8,6 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Main {
@@ -18,6 +22,7 @@ public class Main {
         int lastLayer = mainSheet.getRow(0).getLastCellNum() - 2;
         List<Node> nodes = createNodes(mainSheet, Collections.emptyList(), lastLayer);
         System.out.println(nodes.toString());
+        saveNodesAsJSON(nodes);
     }
 
     private static XSSFWorkbook getWorkbookFromResources(String fileName) {
@@ -54,5 +59,15 @@ public class Main {
         }
 
         return createNodes(sheet, newNodes, layer - 1);
+    }
+
+    private static void saveNodesAsJSON(List<Node> nodes) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectWriter objectWriter = objectMapper.writer(new DefaultPrettyPrinter());
+        try {
+            objectWriter.writeValue(Paths.get("src/main/resources/nodes.json").toFile(), nodes);
+        } catch (IOException e) {
+            throw new RuntimeException("Error on saving Nodes to JSON", e);
+        }
     }
 }

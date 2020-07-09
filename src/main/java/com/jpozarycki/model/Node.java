@@ -11,7 +11,7 @@ public class Node {
     private String name;
     private List<Node> nodes;
 
-    public Node (Integer id, String name) {
+    public Node(Integer id, String name) {
         this.id = id;
         this.name = name;
         this.nodes = new ArrayList<>();

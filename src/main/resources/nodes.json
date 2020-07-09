@@ -1,0 +1,49 @@
+[ {
+  "id" : 3,
+  "name" : "A",
+  "nodes" : [ {
+    "id" : 3,
+    "name" : "AA",
+    "nodes" : [ {
+      "id" : 3,
+      "name" : "AA1",
+      "nodes" : [ ]
+    }, {
+      "id" : 3,
+      "name" : "AA2",
+      "nodes" : [ ]
+    } ]
+  }, {
+    "id" : 3,
+    "name" : "AB",
+    "nodes" : [ ]
+  } ]
+}, {
+  "id" : 3,
+  "name" : "B",
+  "nodes" : [ ]
+}, {
+  "id" : 3,
+  "name" : "C",
+  "nodes" : [ {
+    "id" : 3,
+    "name" : "CA",
+    "nodes" : [ {
+      "id" : 3,
+      "name" : "CA1",
+      "nodes" : [ ]
+    }, {
+      "id" : 3,
+      "name" : "CA2",
+      "nodes" : [ ]
+    } ]
+  } ]
+}, {
+  "id" : 3,
+  "name" : "D",
+  "nodes" : [ {
+    "id" : 3,
+    "name" : "DA",
+    "nodes" : [ ]
+  } ]
+} ]
