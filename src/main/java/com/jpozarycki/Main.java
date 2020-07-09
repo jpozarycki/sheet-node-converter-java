@@ -40,23 +40,23 @@ public class Main {
         }
         List<Node> parentNodes = new ArrayList<>();
         int lastRowIdx = sheet.getLastRowNum();
+        // iterating over cells in a column
         for (int i = 1; i <= lastRowIdx; i++) {
             Row row = sheet.getRow(i);
             Cell cell = row.getCell(layer);
+            // creating a node and assigning child nodes if values are present
             if (cell != null && cell.getCellType() != CellType.BLANK) {
                 int lastCellIdx = row.getLastCellNum() - 1;
                 int nodeId = (int) row.getCell(lastCellIdx).getNumericCellValue();
-                Node newNode = new Node(nodeId, cell.getStringCellValue());
-                parentNodes.add(newNode);
-            }
-        }
-        for (Node childNode : childNodes) {
-            for (Node parentNode : parentNodes) {
-                if (childNode.getName().startsWith(parentNode.getName())) {
-                    List<Node> parentNodeNodes = parentNode.getNodes();
-                    parentNodeNodes.add(childNode);
-                    parentNode.setNodes(parentNodeNodes);
+                String nodeName = cell.getStringCellValue();
+                List<Node> currentChildren = new ArrayList<>();
+                for (Node childNode : childNodes) {
+                    if (childNode.getName().startsWith(nodeName)) {
+                        currentChildren.add(childNode);
+                    }
                 }
+                Node newNode = new Node(nodeId, nodeName, currentChildren);
+                parentNodes.add(newNode);
             }
         }
 
