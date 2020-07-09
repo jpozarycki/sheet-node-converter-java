@@ -4,8 +4,14 @@ This app takes an `.xslx` file with nodes on different layers, converts it into 
 ## USAGE
 On default, the app uses `test.xslx` file in `src/main/resources` directory. In order to use a different file, put it into the mentioned directory and change `FILE_NAME` in the `Main` class.
 
-To run the app, simply run
+
+A custom table with nodes needs to follow the pattern:
+* The first row consists of columns' names
+* The last column consists of nodes' IDs
+* Child nodes have names that extend the names of their parents
+
+To fire up the app, simply run
 
 `./gradlew run` on a UNIX machine or
 
-`gradle run` on Windows machine.
+`gradle run` on a Windows machine.
