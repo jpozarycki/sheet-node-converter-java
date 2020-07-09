@@ -33,23 +33,24 @@ public class Main {
         }
     }
 
-    private static List<Node> createNodes(XSSFSheet sheet, List<Node> nodes, Integer layer) {
+    private static List<Node> createNodes(XSSFSheet sheet, List<Node> childNodes, Integer layer) {
         if (layer < 0) {
-            return nodes;
+            return childNodes;
         }
-        List<Node> newNodes = new ArrayList<>();
+        List<Node> parentNodes = new ArrayList<>();
         int lastRowIdx = sheet.getLastRowNum();
         for (int i = 1; i <= lastRowIdx; i++) {
             Row row = sheet.getRow(i);
             Cell cell = row.getCell(layer);
             if (cell != null && cell.getCellType() != CellType.BLANK) {
                 int lastCellIdx = row.getLastCellNum() - 1;
-                Node newNode = new Node(lastCellIdx, cell.getStringCellValue());
-                newNodes.add(newNode);
+                int nodeId = (int) row.getCell(lastCellIdx).getNumericCellValue();
+                Node newNode = new Node(nodeId, cell.getStringCellValue());
+                parentNodes.add(newNode);
             }
         }
-        for (Node childNode : nodes) {
-            for (Node parentNode : newNodes) {
+        for (Node childNode : childNodes) {
+            for (Node parentNode : parentNodes) {
                 if (childNode.getName().startsWith(parentNode.getName())) {
                     List<Node> parentNodeNodes = parentNode.getNodes();
                     parentNodeNodes.add(childNode);
@@ -58,7 +59,7 @@ public class Main {
             }
         }
 
-        return createNodes(sheet, newNodes, layer - 1);
+        return createNodes(sheet, parentNodes, layer - 1);
     }
 
     private static void saveNodesAsJSON(List<Node> nodes) {
