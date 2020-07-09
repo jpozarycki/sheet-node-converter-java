@@ -28,6 +28,7 @@ public class Main {
 
     private static XSSFWorkbook getWorkbookFromResources(String fileName) {
         try (InputStream is = Main.class.getClassLoader().getResourceAsStream(fileName)) {
+            assert is != null;
             return new XSSFWorkbook(is);
         } catch (IOException e) {
             throw new RuntimeException("Error on retrieving workbook", e);
