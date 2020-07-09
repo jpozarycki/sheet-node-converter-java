@@ -1,8 +1,7 @@
 package com.jpozarycki;
 
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.jpozarycki.model.Node;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -22,8 +21,7 @@ public class Main {
         XSSFSheet mainSheet = wb.getSheetAt(0);
         int lastLayer = mainSheet.getRow(0).getLastCellNum() - 2;
         List<Node> nodes = createNodes(mainSheet, Collections.emptyList(), lastLayer);
-        System.out.println(nodes.toString());
-        saveNodesAsJSON(nodes);
+        saveAndPrintNodesAsJson(nodes);
     }
 
     private static XSSFWorkbook getWorkbookFromResources(String fileName) {
@@ -64,13 +62,17 @@ public class Main {
         return createNodes(sheet, parentNodes, layer - 1);
     }
 
-    private static void saveNodesAsJSON(List<Node> nodes) {
+    private static void saveAndPrintNodesAsJson(List<Node> nodes) {
         ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writer(new DefaultPrettyPrinter());
+        printJsonAsPrettyString(objectMapper.valueToTree(nodes));
         try {
-            objectWriter.writeValue(Paths.get("src/main/resources/nodes.json").toFile(), nodes);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(Paths.get("src/main/resources/nodes.json").toFile(), nodes);
         } catch (IOException e) {
             throw new RuntimeException("Error on saving Nodes to JSON", e);
         }
+    }
+
+    private static void printJsonAsPrettyString(JsonNode jsonNode) {
+        System.out.println(jsonNode.toPrettyString());
     }
 }
