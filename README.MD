@@ -8,4 +8,4 @@ To run the app, simply run
 
 `./gradlew run` on a UNIX machine or
 
-`gradle run` on a Windows machine.
+`gradle run` on Windows machine.
