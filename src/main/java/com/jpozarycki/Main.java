@@ -15,9 +15,10 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Main {
+    private final static String FILE_NAME = "test.xlsx";
 
     public static void main(String[] args) {
-        XSSFWorkbook wb = getWorkbookFromResources("test.xlsx");
+        XSSFWorkbook wb = getWorkbookFromResources(FILE_NAME);
         XSSFSheet mainSheet = wb.getSheetAt(0);
         int lastLayer = mainSheet.getRow(0).getLastCellNum() - 2;
         List<Node> nodes = createNodes(mainSheet, Collections.emptyList(), lastLayer);
