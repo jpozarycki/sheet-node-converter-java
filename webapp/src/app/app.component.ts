@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Node } from './types';
 import { DataService } from './data-service/data.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +10,11 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'webapp';
-  nodes: Node[] | undefined;
-  nodes$: Subscription | undefined;
+  nodes$: Observable<Node[]> | undefined;
 
   constructor(private readonly dataService: DataService) {}
 
   ngOnInit(): void {
-   this.nodes$ = this.dataService.getDefaultNodes().subscribe((nodes: Node[]) => {
-     this.nodes = nodes;
-   });
+   this.nodes$ = this.dataService.getDefaultNodes();
   }
 }
