@@ -1,61 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Node } from './types';
+import { DataService } from './data-service/data.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  nodes: Node[] = [ {
-    id : 1,
-    name : "A",
-    "nodes" : [ {
-      "id" : 2,
-      "name" : "AA",
-      "nodes" : [ {
-        "id" : 3,
-        "name" : "AA1",
-        "nodes" : [ ]
-      }, {
-        "id" : 4,
-        "name" : "AA2",
-        "nodes" : [ ]
-      } ]
-    }, {
-      "id" : 5,
-      "name" : "AB",
-      "nodes" : [ ]
-    } ]
-  }, {
-    "id" : 6,
-    "name" : "B",
-    "nodes" : [ ]
-  }, {
-    "id" : 7,
-    "name" : "C",
-    "nodes" : [ {
-      "id" : 8,
-      "name" : "CA",
-      "nodes" : [ {
-        "id" : 9,
-        "name" : "CA1",
-        "nodes" : [ ]
-      }, {
-        "id" : 10,
-        "name" : "CA2",
-        "nodes" : [ ]
-      } ]
-    } ]
-  }, {
-    "id" : 11,
-    "name" : "D",
-    "nodes" : [ {
-      "id" : 12,
-      "name" : "DA",
-      "nodes" : [ ]
-    } ]
-  } ]
-
+export class AppComponent implements OnInit {
   title = 'webapp';
+  nodes: Node[] | undefined;
+  nodes$: Subscription | undefined;
+
+  constructor(private readonly dataService: DataService) {}
+
+  ngOnInit(): void {
+   this.nodes$ = this.dataService.getDefaultNodes().subscribe((nodes: Node[]) => {
+     this.nodes = nodes;
+   });
+  }
 }
