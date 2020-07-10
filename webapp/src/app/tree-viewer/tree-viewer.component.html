@@ -1,0 +1,6 @@
+<ul>
+  <li *ngFor="let node of nodes">
+    {{node.name}}
+    <app-tree-viewer [nodes]="node.nodes"></app-tree-viewer>
+  </li>
+</ul>
