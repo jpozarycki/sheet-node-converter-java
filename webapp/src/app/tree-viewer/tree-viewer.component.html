@@ -1,6 +1,9 @@
-<ul>
-  <li *ngFor="let node of nodes">
+<ul class="list-group" *ngIf="nodes.length">
+  <li *ngFor="let node of nodes" class="list-group-item">
+    <div *ngIf="hasChildren(node)" class="icon-wrapper"><fa-icon [icon]="getIcon(node)" (click)="toggleChildren(node)"></fa-icon></div>
     {{node.name}}
-    <app-tree-viewer [nodes]="node.nodes"></app-tree-viewer>
+    <div *ngIf="childrenShouldBeDisplayed(node)">
+      <app-tree-viewer [nodes]="node.nodes"></app-tree-viewer>
+    </div>
   </li>
 </ul>
