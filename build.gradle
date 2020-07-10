@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.gradle.playframework' version '0.9'
 }
 
 mainClassName = 'com.jpozarycki.Main'
@@ -12,12 +13,27 @@ repositories {
     mavenCentral()
 }
 
+def PlayVersion = "2.6.25"
+
+play {
+    platform {
+        playVersion = PlayVersion
+        scalaVersion = '2.12'
+        javaVersion = JavaVersion.VERSION_11
+    }
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.11.1'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.1'
+    compile group: 'com.google.inject', name: 'guice', version: '4.0'
+    implementation "com.typesafe.play:play-guice_2.12:$PlayVersion"
+    implementation "com.typesafe.play:play-ahc-ws_2.12:$PlayVersion"
 }

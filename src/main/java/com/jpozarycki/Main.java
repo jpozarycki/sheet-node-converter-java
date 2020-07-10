@@ -2,7 +2,7 @@ package com.jpozarycki;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jpozarycki.model.Node;
+import com.jpozarycki.sheetNodeConverter.model.Node;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -26,9 +26,8 @@ public class Main {
 
     private static XSSFWorkbook getWorkbookFromResources(String fileName) {
         try (InputStream is = Main.class.getClassLoader().getResourceAsStream(fileName)) {
-            assert is != null;
             return new XSSFWorkbook(is);
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             throw new RuntimeException("Error on retrieving workbook", e);
         }
     }

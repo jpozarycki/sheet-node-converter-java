@@ -1,4 +1,4 @@
-package com.jpozarycki.model;
+package com.jpozarycki.sheetNodeConverter.model;
 
 import lombok.Value;
 

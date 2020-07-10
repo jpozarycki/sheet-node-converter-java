@@ -1,0 +1,2 @@
+# Nodes management
+GET        /getNodes        @com.jpozarycki.sheetNodeConverter.controllers.NodesController.getNodes()
