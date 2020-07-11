@@ -1,3 +1,18 @@
-<div *ngIf="(nodes$ | async) as nodes">
-  <app-tree-viewer [nodes]="nodes"></app-tree-viewer>
+<div class="container">
+  <div class="header">
+    <h1>Nodes</h1>
+  </div>
+  <div *ngIf="(nodes$ | async) as nodes; else loadingOrError">
+    <app-tree-viewer [nodes]="nodes"></app-tree-viewer>
+  </div>
+  <ng-template #loadingOrError>
+    <div *ngIf="error$ | async; else loading" class="alert alert-danger" role="alert">
+      Error on loading the list nodes. Please try again later.
+    </div>
+    <ng-template #loading>
+      <div class="alert alert-info">
+        Loading nodes...
+      </div>
+    </ng-template>
+  </ng-template>
 </div>

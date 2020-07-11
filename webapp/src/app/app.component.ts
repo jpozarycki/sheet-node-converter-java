@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Node } from './types';
 import { DataService } from './data-service/data.service';
-import { Observable } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +11,15 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'webapp';
-  nodes$: Observable<Node[]> | undefined;
+  nodes$: Observable<Node[] | unknown> | undefined;
+  error$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private readonly dataService: DataService) {}
 
   ngOnInit(): void {
-   this.nodes$ = this.dataService.getDefaultNodes();
+   this.nodes$ = this.dataService.getDefaultNodes().pipe(catchError((err) => {
+     this.error$.next(true);
+     return of();
+   }));
   }
 }
