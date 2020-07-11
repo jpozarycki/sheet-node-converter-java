@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import play.libs.Json;
+import play.mvc.Http;
 import play.mvc.Result;
 
 import java.util.Collections;
@@ -17,10 +18,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static play.mvc.Http.Status.OK;
 
-public class NodesControllerTest extends AbstractControllerTest {
+public class NodesControllerTest {
     @Mock
     private NodesService nodesService;
     @Mock
@@ -30,6 +32,7 @@ public class NodesControllerTest extends AbstractControllerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+        setupHttpContext();
         setupMocks();
         nodesController = new NodesController(nodesService, jsonMapper);
     }
@@ -45,6 +48,12 @@ public class NodesControllerTest extends AbstractControllerTest {
         List<Node> nodes = List.of(new Node(1, "some node", Collections.emptyList()));
         when(nodesService.getDefaultNodes()).thenReturn(nodes);
         when(jsonMapper.toJson(any(List.class))).thenReturn(Json.toJson(nodes));
+    }
+
+    private void setupHttpContext() {
+        Http.Context context = mock(Http.Context.class);
+        when(context.response()).thenReturn(new Http.Response());
+        Http.Context.current.set(context);
     }
 
 
