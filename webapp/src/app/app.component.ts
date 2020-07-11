@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   constructor(private readonly dataService: DataService) {}
 
   ngOnInit(): void {
-   this.nodes$ = this.dataService.getDefaultNodes().pipe(catchError((err) => {
+   this.nodes$ = this.dataService.getDefaultNodes().pipe(catchError(() => {
      this.error$.next(true);
      return of();
    }));
