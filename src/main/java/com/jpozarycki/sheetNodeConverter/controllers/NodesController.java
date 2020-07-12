@@ -23,7 +23,7 @@ public class NodesController extends Controller {
     public Result getNodes() {
         List<Node> nodes = nodesService.getDefaultNodes();
         JsonNode json = jsonMapper.toJson(nodes);
-        response().setHeader("Access-Control-Allow-Origin", "*");
+        response().setHeader("Access-Control-Allow-Origin", "*"); // temporary solution since I can't configure CORS in play
         return ok(json);
     }
 }
