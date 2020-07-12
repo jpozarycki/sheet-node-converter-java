@@ -1,6 +1,7 @@
 package com.jpozarycki.sheetNodeConverter.services;
 
 import com.jpozarycki.sheetNodeConverter.model.Node;
+import com.jpozarycki.sheetNodeConverter.validators.SheetValidator;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -17,8 +18,10 @@ import static java.util.Collections.emptyList;
 @Singleton
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class SheetToNodesConverter {
+    private final SheetValidator validator;
 
     public List<Node> getNodesFromSheet(XSSFSheet sheet) {
+        validator.validateSheet(sheet);
         int lastLayer = sheet.getRow(0).getLastCellNum() - 2;
         return getNodes(sheet, emptyList(), lastLayer);
     }
