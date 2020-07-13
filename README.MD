@@ -1,5 +1,5 @@
 # SHEET NODE CONVERTER
-![api ss](https://github.com/jpozarycki/sheet-node-converter-java/blob/master/src/nodes_view.png)
+![Nodes View](https://github.com/jpozarycki/sheet-node-converter-java/blob/master/nodes_view.png)
 
 This app takes an `.xslx` file with nodes on different layers, converts it into a list of nodes, then saves it as a `.json` file and prints its structure out in the terminal.
 In a Fullstack mode, you can display nodes as a collapsible tree structure in your browser.
