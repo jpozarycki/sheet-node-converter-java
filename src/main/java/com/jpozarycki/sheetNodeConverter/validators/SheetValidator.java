@@ -14,7 +14,7 @@ public class SheetValidator {
     private static final String ID_COLUMN_NAME = "ID";
     private static final String NO_ID_COLUMN_MESSAGE = "Sheet does not contain ID column or first row is missing";
     private static final String INVALID_ID_TYPE_MESSAGE = "Only numeric values are allowed in ID column";
-    private static final String INVALID_LAYERS_TYPE_MESSAGE = "Only string anf blank values are allowed in layers";
+    private static final String INVALID_LAYERS_TYPE_MESSAGE = "Only string values are allowed in layers";
 
     public void validateSheet(XSSFSheet sheet) {
         checkIfLastColumnIsId(sheet);
@@ -32,6 +32,7 @@ public class SheetValidator {
 
     private void checkIfIdColumnContainsOnlyNumbers(XSSFSheet sheet) {
         Iterator<Row> rows = sheet.rowIterator();
+        rows.next(); // omitting first row
         while (rows.hasNext()) {
             Row row = rows.next();
             int lastCellIdx = row.getLastCellNum() - 1;
@@ -50,8 +51,13 @@ public class SheetValidator {
             while (cells.hasNext()) {
                 Cell cell = cells.next();
                 CellType cellType = cell.getCellType();
-                if (cellType != CellType.STRING || cellType != CellType.BLANK) {
+                if (cellType != CellType.STRING && cellType != CellType.BLANK) {
                     throw new InvalidWorkbookException(INVALID_LAYERS_TYPE_MESSAGE);
+                }
+                // skipping check for the last column with ids
+                int lastCellIdx = row.getLastCellNum() - 1;
+                if (cell.getColumnIndex() + 1 == lastCellIdx) {
+                    cells.next();
                 }
             }
         }
