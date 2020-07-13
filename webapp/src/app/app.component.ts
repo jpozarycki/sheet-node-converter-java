@@ -10,7 +10,6 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'webapp';
   nodes$: Observable<Node[] | unknown> | undefined;
   error$: Subject<boolean> = new Subject<boolean>();
 
