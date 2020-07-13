@@ -17,12 +17,15 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static play.mvc.Http.Status.OK;
 
 public class NodesControllerTest {
+    private static final Integer NODE_ID = 1;
+    private static final String NODE_NAME = "Some name";
+    private static final List<Node> NODE_CHILDREN = Collections.emptyList();
+
     @Mock
     private NodesService nodesService;
     @Mock
@@ -45,7 +48,7 @@ public class NodesControllerTest {
     }
 
     private void setupMocks() {
-        List<Node> nodes = List.of(new Node(1, "some node", Collections.emptyList()));
+        List<Node> nodes = List.of(new Node(NODE_ID, NODE_NAME, NODE_CHILDREN));
         when(nodesService.getDefaultNodes()).thenReturn(nodes);
         when(jsonMapper.toJson(any(List.class))).thenReturn(Json.toJson(nodes));
     }

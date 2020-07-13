@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,6 +16,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class JsonMapperTest {
     private static final String NODE_NAME = "Some name";
     private static final Integer NODE_ID = 1;
+    private static final List<Node> NODE_CHILDREN = Collections.emptyList();
+
     private JsonMapper jsonMapper;
 
     @Before
@@ -24,7 +27,7 @@ public class JsonMapperTest {
 
     @Test
     public void toJsonReturnsConvertedObject() {
-        Node node = new Node(NODE_ID, NODE_NAME, Collections.emptyList());
+        Node node = new Node(NODE_ID, NODE_NAME, NODE_CHILDREN);
         JsonNode expectedJsonNode = getExpectedJsonNode(node);
         JsonNode jsonNode = jsonMapper.toJson(node);
 

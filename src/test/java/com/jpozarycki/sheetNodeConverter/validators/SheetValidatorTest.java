@@ -9,8 +9,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.junit.Assert.*;
-
 public class SheetValidatorTest {
     private static final String CORRECT_TEMPLATE = "simple_test.xlsx";
     private static final String NO_ID_COLUMN_TEST = "no_id_column_test.xlsx";
