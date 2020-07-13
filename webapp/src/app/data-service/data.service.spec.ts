@@ -25,19 +25,23 @@ describe('DataServiceService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call http service with expected path', () => {
+  it('should call http service with expected path', (done) => {
     const expectedPath = environment.api + 'getNodes',
       expectedNode = {
-      id: 1,
-      name: "Some name",
-      nodes: []
-    };
+        id: 1,
+        name: "Some name",
+        nodes: []
+      };
 
     service.getDefaultNodes().subscribe((data) => {
-      expect(data[0].id).toEqual(expectedNode.id);
-      expect(data[0].name).toEqual(expectedNode.name);
-      expect(data[0].nodes).toEqual(expectedNode.nodes);
-    });
+        expect(data[0].id).toEqual(expectedNode.id);
+        expect(data[0].name).toEqual(expectedNode.name);
+        expect(data[0].nodes).toEqual(expectedNode.nodes);
+        done()
+      }, () => {
+        done.fail;
+      }
+    );
 
     const req = httpTestingController.expectOne(expectedPath);
 
